@@ -14,7 +14,8 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh ' bazel build -c opt :encoder_main'
+                sh '/opt/coverity/bin/cov-configure --config coverity_config.xml --gcc'
+                sh '/opt/coverity/bin/cov-build --dir idir --bazel bazel build -c opt :coverity-target'
             }
         }
         stage('Deploy') {

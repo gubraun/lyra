@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Load Build') {
             steps {
-                copyArtifacts(projectName: 'lyra-full', filter: 'lyra-build.json');
+                copyArtifacts(projectName: 'lyra-full', filter: 'lyra-full.json');
             }
         }
     }

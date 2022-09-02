@@ -12,15 +12,17 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/gubraun/lyra'
             }
         }
-        stage('Build') {
+        stage('Coverity') {
             steps {
                 sh '/opt/coverity/bin/cov-configure --config coverity_config.xml --gcc'
                 sh '/opt/coverity/bin/cov-build --dir idir --bazel bazel build -c opt :coverity-target'
+                sh '/opt/coverity/bin/cov-analyze --dir idir --strip-path $(bazel info execution_root 2>/dev/null)'
             }
         }
-        stage('Deploy') {
+        stage('Save Build') {
             steps {
-                echo 'Deploying....'
+                sh '/opt/coverity/bin/cov-manage-im --dir idir export-json-build --output-file lyra-full.json'
+                archiveArtifacts artifacts: 'lyra-full.json', followSymlinks: false
             }
         }
     }

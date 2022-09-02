@@ -1,0 +1,1 @@
+copyArtifacts(projectName: 'sourceproject');

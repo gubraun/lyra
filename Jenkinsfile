@@ -2,8 +2,8 @@ pipeline {
     agent any
     
     environment {
-        ANDROID_NDK_HOME = '$HOME/android/sdk/ndk/21.4.7075529'
-        ANDROID_HOME = '$HOME/android/sdk'
+        ANDROID_NDK_HOME = '/home/gunnar/android/sdk/ndk/21.4.7075529'
+        ANDROID_HOME = '/home/gunnar/android/sdk'
     }
 
     stages {

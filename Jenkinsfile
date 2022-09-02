@@ -25,7 +25,7 @@ pipeline {
         }
         stage('Save Build') {
             steps {
-                sh '/opt/coverity/bin/cov-manage-emit --dir idir export-json-build --output-file lyra-full.json'
+                sh '/opt/coverity/bin/cov-manage-emit --dir idir export-json-build --output-file lyra-full.json --strip-path $(bazel info execution_root 2>/dev/null)'
                 archiveArtifacts artifacts: 'lyra-full.json', followSymlinks: false
             }
         }

@@ -15,8 +15,8 @@ pipeline {
         stage('Coverity') {
             steps {
                 sh '/opt/coverity/bin/cov-configure --config coverity_config.xml --gcc'
-                sh '/opt/coverity/bin/cov-build --dir idir --bazel bazel build -c opt :coverity-target'
-                sh '/opt/coverity/bin/cov-analyze --dir idir --strip-path $(bazel info execution_root 2>/dev/null)'
+                sh '/opt/coverity/bin/cov-build --config coverity_config.xml --dir idir --bazel bazel build -c opt :coverity-target'
+                sh '/opt/coverity/bin/cov-analyze --config coverity_config.xml --dir idir --strip-path $(bazel info execution_root 2>/dev/null)'
             }
         }
         stage('Save Build') {

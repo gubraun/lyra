@@ -20,7 +20,7 @@ pipeline {
         }
         stage('Coverity Analysis') {
             steps {
-                sh '/opt/coverity/bin/cov-run-desktop --disconnected --dir idir lyra-encoder.cc'
+                sh '/opt/coverity/bin/cov-run-desktop --disconnected --dir idir lyra_encoder.cc'
             }
         }
     }

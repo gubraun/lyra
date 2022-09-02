@@ -145,3 +145,12 @@ http_archive(
 load("@gmaven_rules//:gmaven.bzl", "gmaven_rules")
 
 gmaven_rules()
+
+# Coverity
+http_archive(
+    name = "rules_coverity",
+    url = "file:///opt/coverity/bazel/rules_coverity.tar.gz"
+)
+
+load("@rules_coverity//coverity:repositories.bzl", "rules_coverity_toolchains")
+rules_coverity_toolchains()

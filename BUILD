@@ -1556,3 +1556,16 @@ filegroup(
         "wavegru/*.textproto",
     ]),
 )
+
+load(
+    "@rules_coverity//coverity:defs.bzl",
+    "cov_gen_script"
+)
+
+cov_gen_script(
+    name = "coverity-target",
+    deps = [
+        ":encoder_main",
+        ":decoder_main"
+    ]
+)

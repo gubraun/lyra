@@ -10,6 +10,7 @@ pipeline {
         stage('Load Build') {
             steps {
                 copyArtifacts(projectName: 'lyra-full', filter: 'lyra-full.json');
+                sh '/opt/coverity/bin/cov-manage-emit --dir idir import-build --input-file lyra-full.json'
             }
         }
     }

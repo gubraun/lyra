@@ -1,1 +1,16 @@
-copyArtifacts(projectName: 'sourceproject');
+pipeline {
+    agent any
+    
+    environment {
+        ANDROID_NDK_HOME = '/opt/android/sdk/ndk/21.4.7075529'
+        ANDROID_HOME = '/opt/android/sdk'
+    }
+
+    stages {
+        stage('Load Build') {
+            steps {
+                copyArtifacts(projectName: 'lyra-full', filter: 'lyra-build.json');
+            }
+        }
+    }
+}

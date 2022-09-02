@@ -12,10 +12,14 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/gubraun/lyra'
             }
         }
-        stage('Coverity') {
+        stage('Coverity Build') {
             steps {
                 sh '/opt/coverity/bin/cov-configure --config coverity_config.xml --gcc'
                 sh '/opt/coverity/bin/cov-build --config coverity_config.xml --dir idir --bazel bazel build -c opt :coverity-target'
+            }
+        }
+        stage('Coverity Analysis') {
+            steps {
                 sh '/opt/coverity/bin/cov-analyze --config coverity_config.xml --dir idir --strip-path $(bazel info execution_root 2>/dev/null)'
             }
         }

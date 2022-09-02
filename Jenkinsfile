@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                echo 'Building..'
+                git branch: 'main', url: 'https://github.com/gubraun/lyra'
             }
         }
-        stage('Test') {
+        stage('Build') {
             steps {
-                echo 'Testing..'
+                sh ' bazel build -c opt :encoder_main'
             }
         }
         stage('Deploy') {

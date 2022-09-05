@@ -64,6 +64,8 @@ int main(int argc, char** argv) {
     LOG(ERROR) << "Flag --output_dir not set.";
     return -1;
   }
+          
+  char *testbug = 0;
 
   std::error_code error_code;
   if (!ghc::filesystem::is_directory(output_dir, error_code)) {
@@ -77,12 +79,14 @@ int main(int argc, char** argv) {
   auto base_name = encoded_path.stem();
   const auto output_path = ghc::filesystem::path(output_dir) /
                            encoded_path.stem().concat(output_suffix + ".wav");
-
+          
   if (!chromemedia::codec::DecodeFile(encoded_path, output_path, sample_rate_hz,
                                       packet_loss_rate, average_burst_length,
                                       model_path)) {
     LOG(ERROR) << "Could not decode " << encoded_path;
     return -1;
   }
+  
+  LOG(ERROR) << "Coverity test bug " << *testbug;
   return 0;
 }

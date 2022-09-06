@@ -22,7 +22,7 @@ pipeline {
         }
         stage('Coverity Analysis') {
             steps {
-                sh '/opt/coverity/bin/cov-run-desktop --disconnected $(for f in $(git diff --name-only origin/bugtest..origin/main); do echo $(bazel info execution_root)/$f; done)'
+                sh '/opt/coverity/bin/cov-run-desktop --disconnected --ignore-uncapturable-inputs true $(for f in $(git diff --name-only origin/bugtest..origin/main); do echo $(bazel info execution_root)/$f; done)'
             }
         }
     }

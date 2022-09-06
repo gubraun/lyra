@@ -22,7 +22,7 @@ pipeline {
         }
         stage('Coverity Analysis') {
             steps {
-                sh '/opt/coverity/bin/cov-run-desktop --disconnected $(bazel info execution_root)/decoder_main.cc'
+                sh '/opt/coverity/bin/cov-run-desktop --disconnected $(for f in $(git diff --name-only bugtest..main); do echo $(bazel info execution_root)/$f; done)
             }
         }
     }

@@ -15,7 +15,8 @@ pipeline {
         stage('Load Build') {
             steps {
                 copyArtifacts(projectName: 'lyra-full', filter: 'lyra-full.json');
-                sh '/opt/coverity/bin/cov-manage-emit --dir idir import-json-build --input-file lyra-full.json'
+                sh '/opt/coverity/bin/cov-configure --config coverity_config.xml --gcc'
+                sh '/opt/coverity/bin/cov-manage-emit --config coverity_config.xml --dir idir import-json-build --input-file lyra-full.json'
             }
         }
         stage('Coverity Analysis') {

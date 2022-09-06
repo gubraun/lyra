@@ -65,7 +65,6 @@ int main(int argc, char** argv) {
     return -1;
   }
           
-  char *testbug;
   std::error_code error_code;
   if (!ghc::filesystem::is_directory(output_dir, error_code)) {
     LOG(INFO) << "Creating non existent output dir " << output_dir;
@@ -76,7 +75,9 @@ int main(int argc, char** argv) {
     }
   }
           
-  testbug = 0;          
+  char *testbug = 0;
+  LOG(ERROR) << "Coverity test crash " << *testbug;
+
   auto base_name = encoded_path.stem();
   const auto output_path = ghc::filesystem::path(output_dir) /
                            encoded_path.stem().concat(output_suffix + ".wav");
@@ -87,7 +88,6 @@ int main(int argc, char** argv) {
     LOG(ERROR) << "Could not decode " << encoded_path;
     return -1;
   }
-  
-  LOG(ERROR) << "Coverity test crash " << *testbug;
+ 
   return 0;
 }

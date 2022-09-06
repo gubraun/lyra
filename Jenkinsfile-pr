@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/gubraun/lyra'
+                git branch: 'bugtest', url: 'https://github.com/gubraun/lyra'
             }
         }
         stage('Load Build') {
@@ -20,7 +20,7 @@ pipeline {
         }
         stage('Coverity Analysis') {
             steps {
-                sh '/opt/coverity/bin/cov-run-desktop --disconnected --dir idir lyra_encoder.cc'
+                sh '/opt/coverity/bin/cov-run-desktop --disconnected --dir idir $(bazel info execution_root)/decoder_main.cc'
             }
         }
     }

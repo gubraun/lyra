@@ -17,7 +17,7 @@ pipeline {
                 //copyArtifacts(projectName: 'lyra-full', filter: 'lyra-full.json');
                 //sh '/opt/coverity/bin/cov-configure --config coverity_config.xml --gcc'
                 //sh '/opt/coverity/bin/cov-manage-emit --config coverity_config.xml --dir idir import-json-build --input-file lyra-full.json'
-                sh '/opt/coverity/bin/cov-run-desktop --disconnected --build
+                sh '/opt/coverity/bin/cov-run-desktop --disconnected --build'
             }
         }
         stage('Coverity Analysis') {

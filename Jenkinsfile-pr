@@ -22,7 +22,7 @@ pipeline {
         }
         stage('Coverity Analysis') {
             steps {
-                sh '/opt/coverity/bin/cov-run-desktop --disconnected --dir idir $(bazel info execution_root)/decoder_main.cc'
+                sh '/opt/coverity/bin/cov-run-desktop --disconnected $(bazel info execution_root)/decoder_main.cc'
             }
         }
     }

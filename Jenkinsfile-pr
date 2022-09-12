@@ -9,18 +9,20 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/gubraun/lyra'
+                git branch: 'bugtest', url: 'https://github.com/gubraun/lyra'
             }
         }
         stage('Load Build') {
             steps {
-                copyArtifacts(projectName: 'lyra-full', filter: 'lyra-full.json');
-                sh '/opt/coverity/bin/cov-manage-emit --dir idir import-json-build --input-file lyra-full.json'
+                //copyArtifacts(projectName: 'lyra-full', filter: 'lyra-full.json');
+                //sh '/opt/coverity/bin/cov-configure --config coverity_config.xml --gcc'
+                //sh '/opt/coverity/bin/cov-manage-emit --config coverity_config.xml --dir idir import-json-build --input-file lyra-full.json'
+                sh '/opt/coverity/bin/cov-run-desktop --disconnected --build'
             }
         }
         stage('Coverity Analysis') {
             steps {
-                sh '/opt/coverity/bin/cov-run-desktop --disconnected --dir idir lyra_encoder.cc'
+                sh '/opt/coverity/bin/cov-run-desktop --disconnected --ignore-uncapturable-inputs true $(for f in $(git diff --name-only origin/bugtest..origin/main); do echo $(bazel info execution_root)/$f; done)'
             }
         }
     }

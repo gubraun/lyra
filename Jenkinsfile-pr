@@ -12,7 +12,7 @@ pipeline {
                 git branch: 'bugtest', url: 'https://github.com/gubraun/lyra'
             }
         }
-        stage('Load Build') {
+        stage('Capture Build') {
             steps {
                 //copyArtifacts(projectName: 'lyra-full', filter: 'lyra-full.json');
                 //sh '/opt/coverity/bin/cov-configure --config coverity_config.xml --gcc'

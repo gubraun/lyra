@@ -17,12 +17,12 @@ pipeline {
                 //copyArtifacts(projectName: 'lyra-full', filter: 'lyra-full.json');
                 //sh '/opt/coverity/bin/cov-configure --config coverity_config.xml --gcc'
                 //sh '/opt/coverity/bin/cov-manage-emit --config coverity_config.xml --dir idir import-json-build --input-file lyra-full.json'
-                sh '/opt/coverity/bin/cov-run-desktop --disconnected --build'
+                sh '/opt/coverity/bin/cov-run-desktop --build'
             }
         }
         stage('Coverity Analysis') {
             steps {
-                sh '/opt/coverity/bin/cov-run-desktop --disconnected --ignore-uncapturable-inputs true $(for f in $(git diff --name-only origin/bugtest..origin/main); do echo $(bazel info execution_root)/$f; done)'
+                sh '/opt/coverity/bin/cov-run-desktop --ignore-uncapturable-inputs true $(for f in $(git diff --name-only origin/bugtest..origin/main); do echo $(bazel info execution_root)/$f; done)'
             }
         }
     }

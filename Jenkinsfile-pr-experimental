@@ -1,6 +1,30 @@
-                //copyArtifacts(projectName: 'lyra-full', filter: 'lyra-full.json');
-                // ATTN: build step is needed, otherwise deps and this includes will be missing when cov-run-desktop runs
-                //sh 'bazel build -c opt :coverity-target'
+pipeline {
+    agent any
+    
+    environment {
+        ANDROID_NDK_HOME = '/opt/android/sdk/ndk/21.4.7075529'
+        ANDROID_HOME = '/opt/android/sdk'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'bugtest', url: 'https://github.com/gubraun/lyra'
+            }
+        }
+        stage('Load Build') {
+            steps {
+                copyArtifacts(projectName: 'lyra-full', filter: 'lyra-full.json');
+                sh 'bazel build -c opt :coverity-target'
                 // TODO: Rewrite work_dir paths in JSON file and replace with current directory before importing
-                //sh '/opt/coverity/bin/cov-configure --config coverity_config.xml --gcc'
-                //sh '/opt/coverity/bin/cov-manage-emit --config coverity_config.xml --dir idir import-json-build --input-file lyra-full.json'
+                sh '/opt/coverity/bin/cov-configure --config coverity_config.xml --gcc'
+                sh '/opt/coverity/bin/cov-manage-emit --config coverity_config.xml --dir idir import-json-build --input-file lyra-full.json'
+            }
+        }
+        stage('Coverity Analysis') {
+            steps {
+                sh '/opt/coverity/bin/cov-run-desktop --disconnected --ignore-uncapturable-inputs true $(git diff --name-only origin/bugtest..origin/main)'
+            }
+        }
+    }
+}            

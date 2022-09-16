@@ -15,6 +15,9 @@ pipeline {
         stage('Capture Build') {
             steps {
                 //copyArtifacts(projectName: 'lyra-full', filter: 'lyra-full.json');
+                // ATTN: build step is needed, otherwise deps and this includes will be missing when cov-run-desktop runs
+                //sh 'bazel build -c opt :coverity-target'
+                // TODO: Rewrite work_dir paths in JSON file and replace with current directory before importing
                 //sh '/opt/coverity/bin/cov-configure --config coverity_config.xml --gcc'
                 //sh '/opt/coverity/bin/cov-manage-emit --config coverity_config.xml --dir idir import-json-build --input-file lyra-full.json'
                 sh '/opt/coverity/bin/cov-run-desktop --build'

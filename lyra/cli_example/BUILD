@@ -148,3 +148,16 @@ cc_binary(
         "@gulrak_filesystem//:filesystem",
     ],
 )
+
+load(
+    "@rules_coverity//coverity:defs.bzl",
+    "cov_gen_script"
+)
+
+cov_gen_script(
+    name = "coverity_target",
+    deps = [
+        ":encoder_main",
+        ":decoder_main"
+    ]
+)
